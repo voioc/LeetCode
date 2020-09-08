@@ -255,6 +255,20 @@ MySQL为了保证ACID中的一致性和持久性，使用了WAL(Write-Ahead Logg
 3. 减少交互次数（批量提交）
 4. 设置合理的Fetch Size（数据每次返回给客户端的条数）
 
+### PHP防止SQL注入
+
+1.过滤关键字
+2.利用Mysqli和PDO
+PDO命名参数以及参数绑定:  
+    $params = array(':username' => 'test', ':email' => $mail, ':last_login' => time());
+    $pdo->prepare('SELECT * FROM user WHERE username = :username AND email = :emailAND last_login > :last_login');
+    $pdo->execute($params);
+
+MySQLi的参数绑定：
+    $query = $mysqli->prepare('SELECT * FROM users WHERE username = ? AND email = ? AND last_login > ?');
+    $query->bind_param('sss', 'test', $mail, time() - 3600);
+    $query->execute();
+
 ## JVM
 
 ### 运行时数据区域
